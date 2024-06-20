@@ -1,2 +1,4 @@
 GET https://nxk4dlqm6k.execute-api.us-east-1.amazonaws.com/prod/spaces
 ###
+POST https://nxk4dlqm6k.execute-api.us-east-1.amazonaws.com/prod/spaces
+###

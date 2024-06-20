@@ -14,9 +14,29 @@ interface LambdaStackProps extends StackProps {
 export class LambdaStack extends Stack {
 
     public readonly helloLambdaIntegration: LambdaIntegration;
+    public readonly getSpacesLambdaIntegration: LambdaIntegration;
+    public readonly postSpacesLambdaIntegration: LambdaIntegration;
 
     constructor(scope: Construct, id: string, props: LambdaStackProps) {
         super(scope, id, props);
+
+        const getSpacesLambda = new NodejsFunction(this, 'GetSpacesLambda', {
+            runtime: Runtime.NODEJS_18_X,
+            handler: 'handler_get',
+            entry: (join(__dirname, '..', '..', 'services', 'spaces', 'handler.ts')),
+            environment: {
+                TABLE_NAME: props.spacesTable.tableName
+            }
+        });
+
+        const postSpacesLambda = new NodejsFunction(this, 'PostSpacesLambda', {
+            runtime: Runtime.NODEJS_18_X,
+            handler: 'handler_post',
+            entry: (join(__dirname, '..', '..', 'services', 'spaces', 'handler.ts')),
+            environment: {
+                TABLE_NAME: props.spacesTable.tableName
+            }
+        });
 
         const helloLambda = new NodejsFunction(this, 'HelloLambda', {
             runtime: Runtime.NODEJS_18_X,
@@ -37,5 +57,7 @@ export class LambdaStack extends Stack {
         }));
 
         this.helloLambdaIntegration = new LambdaIntegration(helloLambda);
+        this.getSpacesLambdaIntegration = new LambdaIntegration(getSpacesLambda);
+        this.postSpacesLambdaIntegration = new LambdaIntegration(postSpacesLambda);
     }
 }
