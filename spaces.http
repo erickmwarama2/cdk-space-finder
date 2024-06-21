@@ -4,8 +4,8 @@ POST https://nxk4dlqm6k.execute-api.us-east-1.amazonaws.com/prod/spaces
 Content-Type: application/json
 
 {
-    "location": "Kenya"
+    "location": "London"
 }
 ###
-GET https://nxk4dlqm6k.execute-api.us-east-1.amazonaws.com/prod/spaces
+GET https://nxk4dlqm6k.execute-api.us-east-1.amazonaws.com/prod/spaces?id=e2260c3f-bc40-45ff-a357-42d139167a90
 ###
