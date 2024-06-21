@@ -1,4 +1,5 @@
 import { DynamoDBClient, GetItemCommand, PutItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
+import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import {
   APIGatewayProxyEvent,
   APIGatewayProxyResult,
@@ -27,16 +28,12 @@ async function handler_get(
 
         const getItemResponse = await ddbClient.send(new GetItemCommand({
             TableName: process.env.TABLE_NAME,
-            Key: {
-                id: {
-                    S: id
-                }
-            }
+            Key: marshall({id})
         }));
         if (getItemResponse.Item) {
             return {
                 statusCode: 200,
-                body: JSON.stringify(getItemResponse.Item)
+                body: JSON.stringify(unmarshall(getItemResponse.Item))
             }
         } else {
             return {
@@ -53,7 +50,7 @@ async function handler_get(
 
         const response: APIGatewayProxyResult = {
             statusCode: 200,
-            body: JSON.stringify(result.Items)
+            body: JSON.stringify(result.Items.map((item) => unmarshall(item)))
         };
 
         return response;
@@ -80,14 +77,7 @@ async function handler_post(
 
     const result = await ddbClient.send(new PutItemCommand({
       TableName: process.env.TABLE_NAME,
-      Item: {
-        id: {
-            S: randomId
-        },
-        location: {
-            S: item.location
-        }
-      }
+      Item: marshall(item)
     }));
 
     console.log(result);
