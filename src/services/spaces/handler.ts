@@ -35,12 +35,12 @@ async function handler_post(
     const result = await ddbClient.send(new PutItemCommand({
       TableName: process.env.TABLE_NAME,
       Item: {
-          id: {
-              S: item.id
-          },
-          location: {
-              S: item.location
-          }
+        id: {
+            S: randomId
+        },
+        location: {
+            S: item.location
+        }
       }
     }));
 
@@ -53,7 +53,8 @@ async function handler_post(
 
     return response;
   } catch (error) {
-    const response: APIGatewayProxyResult = {
+    console.log(error.message);
+    return {
         statusCode: 500,
         body: JSON.stringify(error.message)
     };
