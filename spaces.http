@@ -7,3 +7,5 @@ Content-Type: application/json
     "location": "Kenya"
 }
 ###
+GET https://nxk4dlqm6k.execute-api.us-east-1.amazonaws.com/prod/spaces
+###

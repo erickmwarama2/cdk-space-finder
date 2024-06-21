@@ -1,4 +1,4 @@
-import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, PutItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
 import {
   APIGatewayProxyEvent,
   APIGatewayProxyResult,
@@ -14,12 +14,26 @@ async function handler_get(
 ): Promise<APIGatewayProxyResult> {
   console.log(event);
 
-  const response: APIGatewayProxyResult = {
-    statusCode: 200,
-    body: "Hello from GET",
-  };
+  try {
+    const result = await ddbClient.send(new ScanCommand({
+        TableName: process.env.TABLE_NAME
+    }));
 
-  return response;
+    console.log(result.Items);
+
+    const response: APIGatewayProxyResult = {
+        statusCode: 200,
+        body: JSON.stringify(result.Items)
+    };
+
+    return response;
+  } catch (error) {
+    console.log(error.message);
+    return {
+        statusCode: 500,
+        body: JSON.stringify(error.message)
+    };
+  }
 }
 
 async function handler_post(
