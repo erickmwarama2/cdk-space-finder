@@ -17,6 +17,7 @@ export class LambdaStack extends Stack {
     public readonly getSpacesLambdaIntegration: LambdaIntegration;
     public readonly postSpacesLambdaIntegration: LambdaIntegration;
     public readonly updateSpacesLambdaIntegration: LambdaIntegration;
+    public readonly deleteSpacesLambdaIntegration: LambdaIntegration;
 
     constructor(scope: Construct, id: string, props: LambdaStackProps) {
         super(scope, id, props);
@@ -42,6 +43,15 @@ export class LambdaStack extends Stack {
         const updateSpacesLambda = new NodejsFunction(this, 'UpdateSpacesLambda', {
             runtime: Runtime.NODEJS_18_X,
             handler: 'handler_update',
+            entry: (join(__dirname, '..', '..', 'services', 'spaces', 'handler.ts')),
+            environment: {
+                TABLE_NAME: props.spacesTable.tableName
+            }
+        });
+
+        const deleteSpacesLambda = new NodejsFunction(this, 'DeleteSpacesLambda', {
+            runtime: Runtime.NODEJS_18_X,
+            handler: 'handler_delete',
             entry: (join(__dirname, '..', '..', 'services', 'spaces', 'handler.ts')),
             environment: {
                 TABLE_NAME: props.spacesTable.tableName
@@ -92,9 +102,18 @@ export class LambdaStack extends Stack {
             resources: [props.spacesTable.tableArn]
         }))
 
+        deleteSpacesLambda.addToRolePolicy(new PolicyStatement({
+            effect: Effect.ALLOW,
+            actions: [
+                'dynamodb:DeleteItem',
+            ],
+            resources: [props.spacesTable.tableArn]
+        }))
+
         this.helloLambdaIntegration = new LambdaIntegration(helloLambda);
         this.getSpacesLambdaIntegration = new LambdaIntegration(getSpacesLambda);
         this.postSpacesLambdaIntegration = new LambdaIntegration(postSpacesLambda);
         this.updateSpacesLambdaIntegration = new LambdaIntegration(updateSpacesLambda);
+        this.deleteSpacesLambdaIntegration = new LambdaIntegration(deleteSpacesLambda);
     }
 }

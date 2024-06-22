@@ -1,4 +1,4 @@
-import { DynamoDBClient, GetItemCommand, PutItemCommand, ScanCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import { DeleteItemCommand, DynamoDBClient, GetItemCommand, PutItemCommand, ScanCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import {
   APIGatewayProxyEvent,
@@ -97,6 +97,48 @@ async function handler_post(
   }
 }
 
+async function handler_delete(
+  event: APIGatewayProxyEvent,
+  context: Context
+): Promise<APIGatewayProxyResult> {
+  console.log(event);
+
+  try {
+    if (event.queryStringParameters) {
+        const { id } = event.queryStringParameters;
+
+        if (!id) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify('Id required')
+            }
+        }
+
+        await ddbClient.send(new DeleteItemCommand({
+          TableName: process.env.TABLE_NAME,
+          Key: marshall({ id })
+        }))
+
+        return {
+          statusCode: 200,
+          body: 'Item deleted succesfully'
+        }
+    } else {
+      return {
+        statusCode: 400,
+        body: JSON.stringify('Please provide right args!!!')
+      };
+    }
+
+  } catch (error) {
+    console.log(error.message);
+    return {
+        statusCode: 500,
+        body: JSON.stringify(error.message)
+    };
+  }
+}
+
 async function handler_update(
   event: APIGatewayProxyEvent,
   context: Context
@@ -152,4 +194,4 @@ async function handler_update(
   }
 }
 
-export { handler_get, handler_post, handler_update };
+export { handler_get, handler_post, handler_update, handler_delete };
