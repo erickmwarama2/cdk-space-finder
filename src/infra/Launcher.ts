@@ -12,4 +12,5 @@ new ApiStack(app, 'ApiStack', {
     helloLambdaIntegration: lambdaStack.helloLambdaIntegration,
     getSpacesLambdaIntegration: lambdaStack.getSpacesLambdaIntegration,
     postSpacesLambdaIntegration: lambdaStack.postSpacesLambdaIntegration,
+    updateSpacesLambdaIntegration: lambdaStack.updateSpacesLambdaIntegration
 });

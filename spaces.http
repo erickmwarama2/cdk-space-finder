@@ -9,3 +9,10 @@ Content-Type: application/json
 ###
 GET https://nxk4dlqm6k.execute-api.us-east-1.amazonaws.com/prod/spaces?id=e2260c3f-bc40-45ff-a357-42d139167a90
 ###
+PUT https://nxk4dlqm6k.execute-api.us-east-1.amazonaws.com/prod/spaces?id=e2260c3f-bc40-45ff-a357-42d139167a90
+Content-Type: application/json
+
+{
+    "location": "New York"
+}
+###

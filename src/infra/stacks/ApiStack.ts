@@ -6,6 +6,7 @@ interface ApiStackProps extends StackProps {
     helloLambdaIntegration: LambdaIntegration;
     getSpacesLambdaIntegration: LambdaIntegration;
     postSpacesLambdaIntegration: LambdaIntegration;
+    updateSpacesLambdaIntegration: LambdaIntegration;
 }
 
 export class ApiStack extends Stack {
@@ -21,5 +22,6 @@ export class ApiStack extends Stack {
 
         spacesResource.addMethod('GET', props.getSpacesLambdaIntegration);
         spacesResource.addMethod('POST', props.postSpacesLambdaIntegration);
+        spacesResource.addMethod('PUT', props.updateSpacesLambdaIntegration);
     }
 }
