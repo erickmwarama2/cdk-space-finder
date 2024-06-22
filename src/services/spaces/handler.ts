@@ -6,6 +6,7 @@ import {
   Context,
 } from "aws-lambda";
 import { v4 } from "uuid";
+import { MissingFieldError, validateSpaceEntry } from "../shared/Validator";
 
 const ddbClient = new DynamoDBClient({});
 
@@ -74,6 +75,8 @@ async function handler_post(
   try {
     const randomId = v4();
     const item = JSON.parse(event.body);
+    item.id = randomId;
+    validateSpaceEntry(item);
 
     const result = await ddbClient.send(new PutItemCommand({
       TableName: process.env.TABLE_NAME,
@@ -90,6 +93,13 @@ async function handler_post(
     return response;
   } catch (error) {
     console.log(error.message);
+    if (error instanceof MissingFieldError) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify(error.message)
+      }
+    }
+
     return {
         statusCode: 500,
         body: JSON.stringify(error.message)
