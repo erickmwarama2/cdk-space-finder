@@ -20,6 +20,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@aws-amplify/auth": "^6.3.6",
     "@aws-sdk/client-dynamodb": "^3.602.0",
     "@aws-sdk/client-s3": "^3.600.0",
     "@aws-sdk/lib-dynamodb": "^3.602.0",
