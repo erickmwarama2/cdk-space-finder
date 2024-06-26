@@ -83,6 +83,14 @@ export class LambdaStack extends Stack {
             resources: ["*"]
         }));
 
+        authSpacesLambda.addToRolePolicy(new PolicyStatement({
+            effect: Effect.ALLOW,
+            actions: [
+                'cognito-idp:AdminInitiateAuth',
+            ],
+            resources: ["*"]
+        }));
+
         postSpacesLambda.addToRolePolicy(new PolicyStatement({
             effect: Effect.ALLOW,
             actions: [
