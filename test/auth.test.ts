@@ -1,4 +1,4 @@
-import { AuthService } from "./AuthService.js";
+import { AuthService } from "./AuthService";
 
 async function testAuth() {
     const service = new AuthService();

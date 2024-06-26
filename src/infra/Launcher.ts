@@ -10,12 +10,13 @@ const lambdaStack = new LambdaStack(app, 'LambdaStack', {
     spacesTable: dataStack.spacesTable
 });
 
-new AuthStack(app, 'AuthStack');
+const authStack = new AuthStack(app, 'AuthStack');
 
 new ApiStack(app, 'ApiStack', {
     helloLambdaIntegration: lambdaStack.helloLambdaIntegration,
     getSpacesLambdaIntegration: lambdaStack.getSpacesLambdaIntegration,
     postSpacesLambdaIntegration: lambdaStack.postSpacesLambdaIntegration,
     updateSpacesLambdaIntegration: lambdaStack.updateSpacesLambdaIntegration,
-    deleteSpacesLambdaIntegration: lambdaStack.deleteSpacesLambdaIntegration
+    deleteSpacesLambdaIntegration: lambdaStack.deleteSpacesLambdaIntegration,
+    userPool: authStack.userPool
 });

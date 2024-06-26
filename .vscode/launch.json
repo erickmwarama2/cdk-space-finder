@@ -8,6 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Debug local file",
+            "nodeVersionHint": 18,
             "runtimeArgs": [
                 "-r",
                 "ts-node/register"

@@ -1,5 +1,6 @@
 import { Stack, StackProps } from 'aws-cdk-lib';
-import { LambdaIntegration, RestApi } from 'aws-cdk-lib/aws-apigateway';
+import { AuthorizationType, CognitoUserPoolsAuthorizer, LambdaIntegration, MethodOptions, RestApi } from 'aws-cdk-lib/aws-apigateway';
+import { IUserPool } from 'aws-cdk-lib/aws-cognito';
 import { Construct } from 'constructs';
 
 interface ApiStackProps extends StackProps {
@@ -8,6 +9,7 @@ interface ApiStackProps extends StackProps {
     postSpacesLambdaIntegration: LambdaIntegration;
     updateSpacesLambdaIntegration: LambdaIntegration;
     deleteSpacesLambdaIntegration: LambdaIntegration;
+    userPool: IUserPool;
 }
 
 export class ApiStack extends Stack {
@@ -16,14 +18,27 @@ export class ApiStack extends Stack {
         super(scope, id, props);
 
         const api = new RestApi(this, 'SpacesApi');
+
+        const authorizer = new CognitoUserPoolsAuthorizer(this, 'SpacesApiAuthorizer', {
+            cognitoUserPools: [props.userPool],
+            identitySource: 'method.request.header.Authorization'
+        });
+
+        authorizer._attachToApi(api);
+
+        const optionsWithAuth: MethodOptions = {
+            authorizationType: AuthorizationType.COGNITO,
+            authorizer: authorizer
+        };
+
         const spacesResource = api.root.addResource('spaces');
         const helloResource = api.root.addResource('hello');
 
         helloResource.addMethod('GET', props.helloLambdaIntegration);
 
-        spacesResource.addMethod('GET', props.getSpacesLambdaIntegration);
-        spacesResource.addMethod('POST', props.postSpacesLambdaIntegration);
-        spacesResource.addMethod('PUT', props.updateSpacesLambdaIntegration);
-        spacesResource.addMethod('DELETE', props.deleteSpacesLambdaIntegration);
+        spacesResource.addMethod('GET', props.getSpacesLambdaIntegration, optionsWithAuth);
+        spacesResource.addMethod('POST', props.postSpacesLambdaIntegration, optionsWithAuth);
+        spacesResource.addMethod('PUT', props.updateSpacesLambdaIntegration, optionsWithAuth);
+        spacesResource.addMethod('DELETE', props.deleteSpacesLambdaIntegration, optionsWithAuth);
     }
 }
