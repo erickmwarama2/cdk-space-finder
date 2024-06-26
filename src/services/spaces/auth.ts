@@ -18,7 +18,7 @@ export async function handler_login(
         const input = {
             UserPoolId: 'us-east-1_dPs6NsP6k',
             ClientId: '2em9pqlqpoput2bgjmes0rrvg1',
-            AuthFlow: AuthFlowType.USER_PASSWORD_AUTH,
+            AuthFlow: AuthFlowType.ADMIN_NO_SRP_AUTH,
             AuthParameters: {
                 "USERNAME": username,
                 "PASSWORD": password

@@ -1,4 +1,5 @@
 GET https://nxk4dlqm6k.execute-api.us-east-1.amazonaws.com/prod/spaces
+Authorization: eyJraWQiOiJJS242UVc2WnY5M3RkdFdYYzMzbm9YNmVISFpram0wMkwzRFVJWHZrRGpBPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIwNGU4ODQxOC03MDQxLTcwNjUtNzcwMi00YmE3ZmRiODdmZTgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9kUHM2TnNQNmsiLCJjb2duaXRvOnVzZXJuYW1lIjoiZXJpY2t1c2VyMSIsIm9yaWdpbl9qdGkiOiJlMTY2YjZiNi1jNDYyLTQzYzEtODI1OC05MWQ1ODcwZTc1MTYiLCJhdWQiOiIyZW05cHFscXBvcHV0MmJnam1lczBycnZnMSIsImV2ZW50X2lkIjoiYzEzZjBjMmYtYzRhYi00OGE0LTg1MjktYzE0NWY3NDA4ZGUzIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3MTkzOTAyNzQsImV4cCI6MTcxOTM5Mzg3NCwiaWF0IjoxNzE5MzkwMjc0LCJqdGkiOiJiMTI5YmVlNS1jNWQzLTQwM2MtYWY1Ni00ZmU5ZWYzZjVmOWEiLCJlbWFpbCI6ImVyaWNrbXdhcmFtYUBnbWFpbC5jb20ifQ.tWZuBM99RGBLZwZkXE5lfj2Pc9twtah3FryrDWBfum050yuqR62FKyQ_s0sz6LNXGh49yLhmLupHn44sYNvW-gSjMRHRWmvYM9KL6V6Lx1iHborsDEWFnfxjCj9rdOmzp-HwUIy-j3YEy8j2c6NZdU4Jfy69_S7DK_1Qo8jUU0zk16ZAAOxgrM5fCri0KZE1EltX9i4YgeBRPip6djUBGWacqBgCpRVLTrbRDEK2ByShZhd0O2nDKynoE0pKW0Q299jKzmWbeFV3xo-To0VSshfVtuopZsu2esLajcL0g4hFNkEQ9jtSVgVwEbmClCd_r1cPvr4TRu0950bfEX9lIw
 ###
 POST https://nxk4dlqm6k.execute-api.us-east-1.amazonaws.com/prod/spaces
 Content-Type: application/json
@@ -23,7 +24,7 @@ POST https://nxk4dlqm6k.execute-api.us-east-1.amazonaws.com/prod/auth
 Content-Type: application/json
 
 {
-    "username": "erick",
-    "password": "password"
+    "username": "erickuser1",
+    "password": "UKP5xvy*bkq*yjy3vtv"
 }
 ###
