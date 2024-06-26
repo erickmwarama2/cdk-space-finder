@@ -18,6 +18,7 @@ export class LambdaStack extends Stack {
     public readonly postSpacesLambdaIntegration: LambdaIntegration;
     public readonly updateSpacesLambdaIntegration: LambdaIntegration;
     public readonly deleteSpacesLambdaIntegration: LambdaIntegration;
+    public readonly authSpacesLambdaIntegration: LambdaIntegration;
 
     constructor(scope: Construct, id: string, props: LambdaStackProps) {
         super(scope, id, props);
@@ -56,6 +57,12 @@ export class LambdaStack extends Stack {
             environment: {
                 TABLE_NAME: props.spacesTable.tableName
             }
+        });
+
+        const authSpacesLambda = new NodejsFunction(this, 'AuthSpacesLambda', {
+            runtime: Runtime.NODEJS_18_X,
+            handler: 'handler_login',
+            entry: (join(__dirname, '..', '..', 'services', 'spaces', 'auth.ts')),
         });
 
         const helloLambda = new NodejsFunction(this, 'HelloLambda', {
@@ -115,5 +122,6 @@ export class LambdaStack extends Stack {
         this.postSpacesLambdaIntegration = new LambdaIntegration(postSpacesLambda);
         this.updateSpacesLambdaIntegration = new LambdaIntegration(updateSpacesLambda);
         this.deleteSpacesLambdaIntegration = new LambdaIntegration(deleteSpacesLambda);
+        this.authSpacesLambdaIntegration = new LambdaIntegration(authSpacesLambda);
     }
 }

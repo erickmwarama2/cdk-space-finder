@@ -9,6 +9,7 @@ interface ApiStackProps extends StackProps {
     postSpacesLambdaIntegration: LambdaIntegration;
     updateSpacesLambdaIntegration: LambdaIntegration;
     deleteSpacesLambdaIntegration: LambdaIntegration;
+    authSpacesLambdaIntegration: LambdaIntegration;
     userPool: IUserPool;
 }
 
@@ -33,8 +34,11 @@ export class ApiStack extends Stack {
 
         const spacesResource = api.root.addResource('spaces');
         const helloResource = api.root.addResource('hello');
+        const authResource = api.root.addResource('auth');
 
         helloResource.addMethod('GET', props.helloLambdaIntegration);
+
+        authResource.addMethod('POST', props.authSpacesLambdaIntegration);
 
         spacesResource.addMethod('GET', props.getSpacesLambdaIntegration, optionsWithAuth);
         spacesResource.addMethod('POST', props.postSpacesLambdaIntegration, optionsWithAuth);

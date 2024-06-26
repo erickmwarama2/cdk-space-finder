@@ -19,3 +19,11 @@ Content-Type: application/json
 ###
 DELETE https://nxk4dlqm6k.execute-api.us-east-1.amazonaws.com/prod/spaces?id=e2260c3f-bc40-45ff-a357-42d139167a90
 ###
+POST https://nxk4dlqm6k.execute-api.us-east-1.amazonaws.com/prod/auth
+Content-Type: application/json
+
+{
+    "username": "erick",
+    "password": "password"
+}
+###

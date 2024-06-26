@@ -18,5 +18,6 @@ new ApiStack(app, 'ApiStack', {
     postSpacesLambdaIntegration: lambdaStack.postSpacesLambdaIntegration,
     updateSpacesLambdaIntegration: lambdaStack.updateSpacesLambdaIntegration,
     deleteSpacesLambdaIntegration: lambdaStack.deleteSpacesLambdaIntegration,
+    authSpacesLambdaIntegration: lambdaStack.authSpacesLambdaIntegration,
     userPool: authStack.userPool
 });
