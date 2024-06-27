@@ -7,6 +7,7 @@ import {
 } from "aws-lambda";
 import { v4 } from "uuid";
 import { MissingFieldError, validateSpaceEntry } from "../shared/Validator";
+import { hasAdminGroup } from "src/infra/Utils";
 
 const ddbClient = new DynamoDBClient({});
 
@@ -112,6 +113,15 @@ async function handler_delete(
   context: Context
 ): Promise<APIGatewayProxyResult> {
   console.log(event);
+
+  const isAdmin = hasAdminGroup(event);
+
+  if (!isAdmin) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify('Not authorized')
+    };
+  }
 
   try {
     if (event.queryStringParameters) {
