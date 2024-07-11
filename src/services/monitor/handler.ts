@@ -1,6 +1,6 @@
 import { SNSEvent } from "aws-lambda";
 
-const webhookUrl = 'https://hooks.slack.com/services/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';
+const webhookUrl = '';
 
 async function handler(event: SNSEvent, context) {
     for (const record of event.Records) {

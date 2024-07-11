@@ -16,6 +16,7 @@ Amplify.configure(awsConfig);
 export class AuthService {
     public async login(username: string, password: string) {
         const result = await signIn({username, password});
+        console.log(JSON.stringify(result));
         return result;
     }
 }

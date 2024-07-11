@@ -8,8 +8,9 @@ import {
 import { v4 } from "uuid";
 import { MissingFieldError, validateSpaceEntry } from "../shared/Validator";
 import { hasAdminGroup } from "src/infra/Utils";
+import { captureAWSv3Client } from 'aws-xray-sdk-core';
 
-const ddbClient = new DynamoDBClient({});
+const ddbClient = captureAWSv3Client(new DynamoDBClient());
 
 async function handler_get(
   event: APIGatewayProxyEvent,
