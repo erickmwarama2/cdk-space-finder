@@ -1,5 +1,5 @@
 import { App } from "aws-cdk-lib";
-import { Template } from "aws-cdk-lib/assertions";
+import { Match, Template } from "aws-cdk-lib/assertions";
 import { MonitorStack } from "../../src/infra/stacks/MonitorStack";
 
 describe('Initial test suite', () => {
@@ -29,4 +29,21 @@ describe('Initial test suite', () => {
         });
 
     });
+
+    test('Test SNS subscription properties', () => {
+        monitorStackTemplate.hasResourceProperties('AWS::SNS::Subscription',
+            Match.objectEquals({
+                Protocol: 'lambda',
+                TopicArn: {
+                    Ref: Match.stringLikeRegexp('AlarmTopic')
+                },
+                Endpoint: {
+                    'Fn::GetAtt': [
+                        Match.stringLikeRegexp('webHookLambda'),
+                        'Arn'
+                    ]
+                }
+            })
+        );
+    })
 });
