@@ -1,5 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Initial test suite Lambda snapshot tests 1`] = `
+{
+  "webHookLambda3427ABA6": {
+    "DependsOn": [
+      "webHookLambdaServiceRole1A032560",
+    ],
+    "Properties": {
+      "Code": {
+        "S3Bucket": {
+          "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+        },
+        "S3Key": "58148a0f5ede5b8bf9c69be430c17e07d5783bfaddf8bc89c3a87711ceab2b74.zip",
+      },
+      "Handler": "index.handler",
+      "Role": {
+        "Fn::GetAtt": [
+          "webHookLambdaServiceRole1A032560",
+          "Arn",
+        ],
+      },
+      "Runtime": "nodejs18.x",
+    },
+    "Type": "AWS::Lambda::Function",
+  },
+}
+`;
+
 exports[`Initial test suite Monitor stack snapshot 1`] = `
 {
   "Parameters": {
